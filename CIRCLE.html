@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Talking Circle</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000;
+            font-size: 18px; /* Increased font size */
+        }
+        .circle {
+            width: 250px; /* Increased size */
+            height: 250px; /* Increased size */
+            background: rgba(47, 179, 236, 0.8);
+            border-radius: 50%;
+            box-shadow: 0 0 50px rgb(91, 91, 229); /* Larger glow */
+            position: relative;
+            overflow: hidden;
+        }
+        .circle img {
+            width: 130%; /* Scaled up GIF */
+            height: 130%; /* Scaled up GIF */
+            object-fit: cover;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        button {
+            padding: 12px 24px; /* Larger padding */
+            font-size: 18px; /* Increased button font size */
+            margin-top: 20px; /* Added space between button and circle */
+            cursor: pointer;
+            background-color: rgba(47, 179, 236, 0.8);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            box-shadow: 0 0 10px rgba(91, 91, 229, 0.7);
+        }
+        button:hover {
+            background-color: rgba(47, 179, 236, 1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="circle" id="circle">
+        <img src="download.gif" alt="Animated GIF">
+    </div>
+    <button onclick="speak()">Speak</button>
+
+    <script>
+        function speak() {
+            let text = "My name is Aniruddha Rai. I am from Oangma.";
+            let utterance = new SpeechSynthesisUtterance(text);
+            let circle = document.getElementById("circle");
+
+            let glowLevels = [40, 50, 60, 70, 80]; // Larger glow intensities
+            let animationInterval;
+
+            utterance.onstart = () => {
+                animationInterval = setInterval(() => {
+                    let glow = glowLevels[Math.floor(Math.random() * glowLevels.length)];
+                    circle.style.boxShadow = `0 0 ${glow}px rgba(0, 0, 139, 1)`; /* Larger dark blue glow */
+                }, 100);
+            };
+
+            utterance.onend = () => {
+                clearInterval(animationInterval);
+                circle.style.boxShadow = "0 0 50px rgba(0, 0, 139, 1)"; /* Larger glow */
+            };
+
+            speechSynthesis.speak(utterance);
+        }
+    </script>
+
+</body>
+</html>

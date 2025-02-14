@@ -134,14 +134,14 @@ body {
     text-shadow: 0 0 10px rgb(64, 6, 253), 0 0 20px rgb(3, 65, 248), 0 0 30px rgb(17, 5, 250);
 }
 
-container-3{
+.container-3{
     background-color: #030404;
     height: 100%;
     width: 50%;
     display: flex;
-    justify-content: center;
+    justify-content: left;
     align-items: center;
     flex-direction: column;
-    position: fixed;
-    text-align: left;
+
+    text-align: center;
 }
