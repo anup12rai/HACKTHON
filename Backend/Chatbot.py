@@ -77,8 +77,6 @@ def ChatBot(Query):
             stop=None
         )
 
-        # Process completion response
-        
         Answer = ""
         for chunk in completion:
             if chunk.choices[0].delta.content:
@@ -92,7 +90,7 @@ def ChatBot(Query):
         with open(r"Data\ChatLog.json", "w") as f:
             dump(messages, f, indent=4)
 
-        return "Bot:"+ AnswerModifier(Answer=Answer)
+        return  AnswerModifier(Answer=Answer)
         
 
     except Exception as e:
@@ -106,4 +104,4 @@ def ChatBot(Query):
 if __name__ == "__main__":
     while True:
         user_input = input("Enter your Question: ")
-        print(ChatBot(user_input))
+        TextToSpeech(ChatBot(user_input))
