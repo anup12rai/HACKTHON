@@ -14,7 +14,7 @@ body {
 .container {
     background-color: #030404;
     height: 100%;
-    width: 100%;
+    width: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -24,10 +24,10 @@ body {
 }
 
 .title {
-    top: 20px;
+    top: 0%;
     position: absolute;
     font-size: 36px;
-    margin-bottom: 20px;
+    margin-bottom: 2px;
     color: #f4f6f6;
     text-shadow: 0 0 10px #4006fd, 0 0 20px #0341f8, 0 0 30px #1105fa;
 }
@@ -41,27 +41,11 @@ body {
 .logo {
     max-width: 100%;
     height: auto;
-    max-height: 250px;
+    max-height: 130px;
     margin-top: -160px;
 }
 
-.time {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    font-size: 24px;
-    color: rgb(244, 246, 246);
-    text-shadow: 0 0 10px rgb(64, 6, 253), 0 0 20px rgb(3, 65, 248), 0 0 30px rgb(17, 5, 250);
-}
 
-.weather {
-    position: absolute;
-    top: 50px; /* Adjust the position below the time */
-    right: 20px;
-    font-size: 18px;
-    color: rgb(244, 246, 246);
-    text-shadow: 0 0 10px rgb(64, 6, 253), 0 0 20px rgb(3, 65, 248), 0 0 30px rgb(17, 5, 250);
-}
 
 .input_outer {
     background-color: black;
@@ -70,9 +54,9 @@ body {
     display: flex;
     position: absolute;
     bottom: 20px;
-    width: 90%;
+    width: 50%;;
     gap: 10px;
-    align-items: center;
+    align-items: left;
     border: 1px solid #4a00de;
     box-shadow: 0 0 10px #1e00de;
 }
@@ -92,6 +76,19 @@ body {
     outline: none;
 }
 
+.result_text {
+    position: center;
+    font-size: 20px;
+    padding: 10px;
+    background-color: #0a232a;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #05b5f0;
+    width: 13cm;
+    height: 4cm;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
 .cmn_btn {
     border: 1px solid white;
     background: #0a232a;
@@ -108,33 +105,43 @@ body {
     color: #020d10;
 }
 
-.result_text {
+.container-2{
+    background-color: #030404;
+    height: 100%;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: fixed;
+    text-align: right;
+}
+.time {
     position: absolute;
     top: 10px;
-    left: 10px;
-    font-size: 14px;
-    padding: 10px;
-    background-color: #0a232a;
-    border-radius: 10px;
-    box-shadow: 0 0 10px #05b5f0;
-    width: 5cm;
-    height: 8cm;
-    overflow-y: auto;
-    overflow-x: hidden;
+    right: 20px;
+    font-size: 24px;
+    color: rgb(244, 246, 246);
+    text-shadow: 0 0 10px rgb(64, 6, 253), 0 0 20px rgb(3, 65, 248), 0 0 30px rgb(17, 5, 250);
 }
 
-.voice-button {
-    border: 1px solid white;
-    background: #0a232a;
-    border-radius: 20px;
-    color: white;
-    padding: 8px 20px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: all 0.3s ease;
+.weather {
+    position: absolute;
+    top: 50px; /* Adjust the position below the time */
+    right: 20px;
+    font-size: 18px;
+    color: rgb(244, 246, 246);
+    text-shadow: 0 0 10px rgb(64, 6, 253), 0 0 20px rgb(3, 65, 248), 0 0 30px rgb(17, 5, 250);
 }
 
-.voice-button:hover {
-    background-color: #2900de;
-    color: #020d10;
+container-3{
+    background-color: #030404;
+    height: 100%;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: fixed;
+    text-align: left;
 }
