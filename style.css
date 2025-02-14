@@ -1,0 +1,140 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #060506;
+    color: white;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* Main container styling */
+.container {
+    background-color: #030404;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    text-align: center;
+}
+
+.title {
+    top: 20px;
+    position: absolute;
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #f4f6f6;
+    text-shadow: 0 0 10px #4006fd, 0 0 20px #0341f8, 0 0 30px #1105fa;
+}
+
+.logo-container {
+    text-align: center;
+    margin-bottom: 30px;
+    margin-top: 50px;
+}
+
+.logo {
+    max-width: 100%;
+    height: auto;
+    max-height: 250px;
+    margin-top: -160px;
+}
+
+.time {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 24px;
+    color: rgb(244, 246, 246);
+    text-shadow: 0 0 10px rgb(64, 6, 253), 0 0 20px rgb(3, 65, 248), 0 0 30px rgb(17, 5, 250);
+}
+
+.weather {
+    position: absolute;
+    top: 50px; /* Adjust the position below the time */
+    right: 20px;
+    font-size: 18px;
+    color: rgb(244, 246, 246);
+    text-shadow: 0 0 10px rgb(64, 6, 253), 0 0 20px rgb(3, 65, 248), 0 0 30px rgb(17, 5, 250);
+}
+
+.input_outer {
+    background-color: black;
+    border-radius: 10px;
+    padding: 15px;
+    display: flex;
+    position: absolute;
+    bottom: 20px;
+    width: 90%;
+    gap: 10px;
+    align-items: center;
+    border: 1px solid #4a00de;
+    box-shadow: 0 0 10px #1e00de;
+}
+
+.input_outer input {
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    color: white;
+    font-size: 16px;
+    padding: 8px;
+    outline: none;
+    box-shadow: 0 0 10px #039df0;
+}
+
+.input_outer input:focus-visible {
+    outline: none;
+}
+
+.cmn_btn {
+    border: 1px solid white;
+    background: #0a232a;
+    border-radius: 20px;
+    color: white;
+    padding: 8px 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.cmn_btn:hover {
+    background-color: #2100de;
+    color: #020d10;
+}
+
+.result_text {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 14px;
+    padding: 10px;
+    background-color: #0a232a;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #05b5f0;
+    width: 5cm;
+    height: 8cm;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.voice-button {
+    border: 1px solid white;
+    background: #0a232a;
+    border-radius: 20px;
+    color: white;
+    padding: 8px 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.voice-button:hover {
+    background-color: #2900de;
+    color: #020d10;
+}
