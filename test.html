@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Assistant - Jarvas</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #000000, #000304);
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            gap: 15px;
+            height: 100vh;
+            padding: 15px;
+        }
+
+    .container {
+    background-color: transparent;
+    height: 100%;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    text-align: center;
+}
+
+.title {
+    top: 0%;
+    position: absolute;
+    font-size: 36px;
+    margin-bottom: 2px;
+    color: #f4f6f6;
+    text-shadow: 0 0 10px #4006fd, 0 0 20px #0341f8, 0 0 30px #1105fa;
+}
+
+.logo-container {
+    text-align: center;
+    margin-bottom: 60px;
+    margin-top: 80px;
+}
+
+.logo {
+    max-width: 100%;
+    height: auto;
+    max-height: 250px;
+    margin-top: -160px;
+}
+
+.bed{
+    flex-direction: column;
+}
+
+.kitchen{
+    flex-direction: column;
+}
+
+.result_text {
+    position: absolute;
+    bottom: 100px; /* Adjust this value as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+    padding: 10px;
+    background-color: #0a232a;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #05b5f0;
+    width: 13cm;
+    height: 4cm;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.input_outer {
+    position: absolute;
+    bottom: 20px; /* Adjust this value as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: black;
+    border-radius: 10px;
+    padding: 15px;
+    display: flex;
+    width: 70%;
+    gap: 10px;
+    align-items: left;
+    border: 1px solid #4a00de;
+    box-shadow: 0 0 10px #1e00de;
+}
+
+.input_outer input {
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    color: white;
+    font-size: 16px;
+    padding: 8px;
+    outline: none;
+    box-shadow: 0 0 10px #039df0;
+}
+
+
+.cmn_btn {
+    border: 1px solid white;
+    background: #0a232a;
+    border-radius: 20px;
+    color: white;
+    padding: 8px 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.cmn_btn:hover {
+    background-color: #2100de;
+    color: #020d10;
+}
+
+.date-weather {
+    flex-direction: column;
+    text-align: center;
+    font-size: 1.3em;
+    padding: 15px;
+}
+
+.weather-info {
+    flex-direction: column;
+    text-align: center;
+    font-size: 1.3em;
+    padding: 15px;
+}
+       
+        .controls-container {
+            padding: 10px ;
+            background: rgba(0, 180, 216, 0.15);
+            display: flex;
+            flex-direction: column;
+           gap: 1px;
+        }
+        .light-control, .fan-control {
+            padding: 20px;
+            
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 0 8px rgba(0, 255, 255, 0.4);
+        }
+        .chat-interface {
+           
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 180, 216, 0.15);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+        }
+        .chat-interface h2 {
+            margin-bottom: 10px;
+        }
+        
+        button, input[type=range] {
+            margin-top: 10px;
+            padding: 12px;
+            border: none;
+            cursor: pointer;
+            background: #0077B6;
+            color: white;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #00B4D8;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="controls-container">
+        <H4> Devices Connected</H4>
+        <div class="light-control">
+            <h3>Light Control</h3>
+            <p>bed light 
+                <img id="toggle-on-bed" onclick="toggle('bed')" src="on.png" style="display: inline;">
+                <img id="toggle-off-bed" onclick="toggle('bed')" src="off.png" style="display: none;">
+            </p>
+            <p>kitchen light 
+                <img id="toggle-on-kitchen" onclick="toggle('kitchen')" src="on.png" style="display: inline;">
+                <img id="toggle-off-kitchen" onclick="toggle('kitchen')" src="off.png" style="display: none;">
+            </p>
+        </div>
+        <div class="fan-control">
+            <h3>Fan Control</h3>
+            <p>ceiling fan
+                <img id="toggle-on-fan" onclick="toggle('fan')" src="on.png" style="display: inline;">
+                <img id="toggle-off-fan" onclick="toggle('fan')" src="off.png" style="display: none;">
+            </p>
+        </div>
+    </div>
+    
+    <section class="container">
+        
+        <div class="title"><h1>nexo</h1></div>
+        <div class="logo-container" onclick="startSpeaking()">
+            <img src="AI-soul2.gif" alt="Logo" class="logo">
+        </div>
+        
+        <div class="result_text" id="speechBox">Your speech will appear here...</div>
+        <div class="input_outer mt-3">
+            <input type="text" class="form-control" placeholder="Type your message here..." id="message">
+            <div class="mt-2 d-flex gap-2">
+                <button class="cmn_btn btn btn-primary" onclick="sendMessage()">
+                    Send
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <div class="date-weather" id="dateWeather">Loading...</div><br>
+<div class="weather-info" id="weatherInfo">Weather information will appear here...</div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('dateWeather').innerText = now.toLocaleString();
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+        
+        function toggleLight(type) {
+            alert(type + " Light toggled");
+        }
+        function toggleFan() {
+            alert("Fan toggled");
+        }
+        function adjustFanSpeed(value) {
+            alert("Fan speed set to " + value);
+        }
+    
+        function sendMessage() {
+            const msg = document.getElementById('message').value;
+            if (msg) {
+                document.getElementById('speechBox').innerText = msg;
+            }
+        }
+        function startSpeaking() {
+            const msg = document.getElementById('speechBox').innerText;
+            if (msg !== "Your speech will appear here...") {
+                const speech = new SpeechSynthesisUtterance(msg);
+                window.speechSynthesis.speak(speech);
+            }
+        }
+        
+        //toggle
+ 
+        function toggle(id) {
+    const toggleOn = document.getElementById(`toggle-on-${id}`);
+    const toggleOff = document.getElementById(`toggle-off-${id}`);
+    
+    if (toggleOn.style.display === 'inline') {
+        toggleOn.style.display = 'none';
+        toggleOff.style.display = 'inline';
+    } else {
+        toggleOn.style.display = 'inline';
+        toggleOff.style.display = 'none';
+    }
+}
+
+
+        //weather 
+        function processWeatherData(response) {
+    const weatherInfo = document.getElementById('weatherInfo');
+    const currentConditions = response.currentConditions;
+    weatherInfo.innerText = `Temperature: ${currentConditions.temp}°F, Condition: ${currentConditions.conditions}`;
+}
+
+//weather 
+fetch("https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/kathmandu?unitGroup=us&key=W33RTSCK5XCBJK2XKTBAMETW5&contentType=json", {
+  method: 'GET'
+}).then(response => {
+  if (!response.ok) {
+    throw response; //check the http response code and if isn't ok then throw the response as an error
+  }
+            
+  return response.json(); //parse the result as JSON
+
+}).then(response => {
+  //response now contains parsed JSON ready for use
+  processWeatherData(response);
+
+}).catch((errorResponse) => {
+  if (errorResponse.text) { //additional error information
+    errorResponse.text().then( errorMessage => {
+      //errorMessage now returns the response body which includes the full error message
+    })
+  } else {
+    //no additional error information 
+  } 
+});
+    </script>
+    </body>
+</html>
