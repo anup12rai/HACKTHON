@@ -214,7 +214,7 @@ def MainExecution():
 
 # Main function
 if __name__ == "__main__":
-    TextToSpeech(get_random_time_of_day())
+    TextToSpeech(function())
     while True:
-        user_input = SpeechRecognization()
+        user_input = input("Enter the command: ")
         print(ChatBot(user_input))
