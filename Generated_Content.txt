@@ -1,18 +1,56 @@
-Subject: Request for Sick Leave
+async def handle_connection(websocket, path):
+    user_id = str(id(websocket))  # Unique identifier for each user session
+    print(f"New connection: {user_id}")
 
-Dear [Recipient's Name],
+    # Initialize a unique chat session for the user
+    user_sessions[user_id] = genai.GenerativeModel(
+        model_name="gemini-1.5-pro",
+        generation_config=generation_config,
+        system_instruction=system_instruction,
+    ).start_chat(history=[])
 
-I am writing to formally request a sick leave from my position at [Company Name] due to my current health condition. I regret that I am unable to fulfill my duties as a team member during this time.
+    try:
+        async for message in websocket:
+            data = json.loads(message)
+            user_input = data.get("input", "")
+            print(f"Received input from {user_id}: {user_input}")
 
-I was diagnosed with [Illness] on [Date] and was advised by my doctor to take a leave of absence from work for at least [Number of Days] days. I will provide a medical certificate from my doctor to support my request.
+            # Process user input and get a response
+            try:
+                response = user_sessions[user_id].send_message(user_input)
+                response_text = response.text
+                cleaned_response = remove_special_symbols(response_text)
+                print(f"Response to {user_id}: {cleaned_response}")
 
-During my absence, I will ensure that all my pending tasks will be handed over to my colleagues and will be available for any necessary communication through email or phone. I will make up for the lost time and will work extra hours, if needed, to complete my tasks upon my return.
+                # Control hardware if necessary
+                control_hardware(response_text)
 
-I apologize for any inconvenience this may cause and appreciate your understanding and support during this difficult time. I look forward to your positive response and thank you in advance for your consideration.
+                # Send response back to the user
+                await websocket.send(json.dumps({"response": cleaned_response}))
+            except Exception as e:
+                print(f"Error processing message for {user_id}: {e}")
+                await websocket.send(json.dumps({"response": "An error occurred. Please try again."}))
 
-Sincerely,
+    except websockets.exceptions.ConnectionClosed:
+        print(f"Connection closed: {user_id}")
 
-[Your Name]
-[Your Position]
-[Company Name]
-[Your Contact Information]
+    finally:
+        # Clean up the session
+        if user_id in user_sessions:
+            del user_sessions[user_id]
+
+# --- WebSocket Server ---
+async def main():
+    server = await websockets.serve(handle_connection, "localhost", 8765)
+    print("WebSocket server started on ws://localhost:8765")
+    await server.wait_closed()
+
+# Start WebSocket server
+try:
+    asyncio.run(main())
+except KeyboardInterrupt:
+    print("Server shutting down...")
+finally:
+    if ser and ser.is_open:
+        ser.close()
+        print("Serial connection closed.")
