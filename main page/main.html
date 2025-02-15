@@ -5,16 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>AI Assistant - Jarvas</title>
-
 </head>
 <body>
-    
     <div class="controls-container">
-      <div class="dev">  Devices Connected </div>
+        <div class="dev">Devices Connected</div>
         <div class="light-control">
             Light Control
             <p>bed light 
-                <img id="toggle-on-bed" onclick="toggle('bed')" src="o.png" style="display: inline;">
+                <img id="toggle-on-bed" onclick="toggle('bed')" src="on.png" style="display: inline;">
                 <img id="toggle-off-bed" onclick="toggle('bed')" src="off.png" style="display: none;">
             </p>
             <p>kitchen light 
@@ -31,15 +29,15 @@
         </div>
     </div>
     
-    <div class="title">Jarivs</div>
+    <div class="title">Jarvis</div>
     <div class="logo-container">
-        <img src="AI-soul2.gif" alt="Logo" class="logo">
+        <img src="AI-soul2.gif" alt="Logo" class="logo" id="voiceButton">
     </div>
 
     <div class="chat-container">
         <div class="messages-container">
             <div id="messages" class="messages"></div>
-            <p id="typing" class="typing" placeholder="jarivs on lockdown">Typing...</p>
+            <p id="typing" class="typing">thinking...</p>
         </div>
         <div class="input-container">
             <input id="messageInput" class="message-input" type="text" placeholder="Type a message...">
@@ -49,9 +47,8 @@
     </div>
     
     <div class="date-weather" id="dateWeather">Loading...</div><br>
-<div class="weather-info" id="weatherInfo">Weather information will appear here...</div>
+    <div class="weather-info" id="weatherInfo">Weather information will appear here...</div>
 
-<script src="script.js"></script>
-
-    </body>
+    <script src="script.js"></script>
+</body>
 </html>

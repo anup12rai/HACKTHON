@@ -5,13 +5,6 @@ function updateTime() {
 setInterval(updateTime, 1000);
 updateTime();
 
-function sendMessage() {
-    const msg = document.getElementById('message').value;
-    if (msg) {
-        document.getElementById('speechBox').innerText = msg;
-    }
-}
-
 // Toggle function
 function toggle(id) {
     const toggleOn = document.getElementById(`toggle-on-${id}`);
@@ -58,6 +51,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const typingIndicator = document.getElementById('typing');
     const messageInput = document.getElementById('messageInput');
     const sendButton = document.getElementById('sendButton');
+    const voiceButton = document.getElementById('voiceButton');
+    const result = document.getElementById('response');
 
     let isTyping = false;
 
@@ -95,17 +90,69 @@ document.addEventListener('DOMContentLoaded', () => {
             sendMessage();
         }
     });
+
+    // WebSocket
+    const socket = new WebSocket("ws://localhost:8765");
+
+    socket.onopen = () => {
+        console.log("Connected to WebSocket server.");
+    };
+
+    socket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        const responseText = data.response;
+        console.log("AI response:", responseText);
+
+        const resultBox = document.getElementById("response");
+        resultBox.textContent = responseText;
+        speakText(responseText);
+    };
+
+    function speakText(text) {
+        if ('speechSynthesis' in window) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            utterance.volume = 1;
+            utterance.rate = 1;
+            utterance.pitch = 1;
+            speechSynthesis.speak(utterance);
+        } else {
+            console.log("Sorry, your browser does not support speech synthesis.");
+        }
+    }
+
+    voiceButton.onclick = () => {
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+            const recognition = new (window.webkitSpeechRecognition || window.SpeechRecognition)();
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            recognition.onstart = () => {
+                console.log("Speech recognition started. Speak now...");
+            };
+
+            recognition.onresult = (event) => {
+                const speechResult = event.results[0][0].transcript;
+                console.log("Recognized speech:", speechResult);
+                messageInput.value = speechResult;
+
+                sendButton.click();
+            };
+
+            recognition.onerror = (event) => {
+                console.error("Speech recognition error:", event.error);
+                result.textContent = "Error in recognizing speech. Please try again.";
+            };
+
+            recognition.onend = () => {
+                console.log("Speech recognition ended.");
+            };
+
+            recognition.start();
+        } else {
+            console.log("Sorry, your browser does not support speech recognition.");
+            result.textContent = "Your browser does not support speech recognition.";
+        }
+    };
 });
-
-// websocket
-
-const socket = new WebSocket("ws://localhost:8765");
-
-socket.onmessage = function(event) {
-    document.getElementById("response").innerText = event.data;
-};
-
-function sendMessage() {
-    let message = document.getElementById("message-input").value;
-    socket.send(message);
-}
