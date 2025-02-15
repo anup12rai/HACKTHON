@@ -94,65 +94,65 @@ document.addEventListener('DOMContentLoaded', () => {
     // WebSocket
     const socket = new WebSocket("ws://localhost:8765");
 
-    socket.onopen = () => {
-        console.log("Connected to WebSocket server.");
-    };
+    // Speech Recognition Setup
+    let recognition;
+    let isRecognitionActive = false;
+    
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+        recognition = new (window.webkitSpeechRecognition || window.SpeechRecognition)();
+        recognition.lang = 'en-US';
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+        recognition.continuous = true; // Keep listening continuously
 
-    socket.onmessage = (event) => {
-        const data = JSON.parse(event.data);
-        const responseText = data.response;
-        console.log("AI response:", responseText);
+        recognition.onstart = () => {
+            console.log("Speech recognition started. Speak now...");
+            isRecognitionActive = true;
+            voiceButton.classList.add('active');
+        };
+// changing here 
+recognition.onresult = (event) => {
+    const speechResult = event.results[event.resultIndex][0].transcript;
+    console.log("Recognized speech:", speechResult);
+    messageInput.value += speechResult + ' '; // Append recognized speech to input
+    sendButton.click();
+};
+//end here
+        recognition.onerror = (event) => {
+            console.error("Speech recognition error:", event.error);
+            if (event.error === 'not-allowed') {
+                result.textContent = "Microphone access denied. Please enable permissions.";
+            }
+            isRecognitionActive = false;
+            voiceButton.classList.remove('active');
+        };
 
-        const resultBox = document.getElementById("response");
-        resultBox.textContent = responseText;
-        speakText(responseText);
-    };
-
-    function speakText(text) {
-        if ('speechSynthesis' in window) {
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'en-US';
-            utterance.volume = 1;
-            utterance.rate = 1;
-            utterance.pitch = 1;
-            speechSynthesis.speak(utterance);
-        } else {
-            console.log("Sorry, your browser does not support speech synthesis.");
-        }
+        recognition.onend = () => {
+            console.log("Speech recognition ended.");
+            voiceButton.classList.remove('active');
+            if (isRecognitionActive) {
+                // Auto-restart listening if still active
+                recognition.start();
+            }
+        };
     }
 
     voiceButton.onclick = () => {
-        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-            const recognition = new (window.webkitSpeechRecognition || window.SpeechRecognition)();
-            recognition.lang = 'en-US';
-            recognition.interimResults = false;
-            recognition.maxAlternatives = 1;
-
-            recognition.onstart = () => {
-                console.log("Speech recognition started. Speak now...");
-            };
-
-            recognition.onresult = (event) => {
-                const speechResult = event.results[0][0].transcript;
-                console.log("Recognized speech:", speechResult);
-                messageInput.value = speechResult;
-
-                sendButton.click();
-            };
-
-            recognition.onerror = (event) => {
-                console.error("Speech recognition error:", event.error);
-                result.textContent = "Error in recognizing speech. Please try again.";
-            };
-
-            recognition.onend = () => {
-                console.log("Speech recognition ended.");
-            };
-
-            recognition.start();
+        if (!recognition) {
+            result.textContent = "Speech recognition not supported in your browser.";
+            return;
+        }
+        
+        if (!isRecognitionActive) {
+            try {
+                recognition.start();
+                isRecognitionActive = true;
+            } catch (error) {
+                console.error("Error starting recognition:", error);
+            }
         } else {
-            console.log("Sorry, your browser does not support speech recognition.");
-            result.textContent = "Your browser does not support speech recognition.";
+            isRecognitionActive = false;
+            recognition.stop();
         }
     };
 });
