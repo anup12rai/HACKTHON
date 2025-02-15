@@ -1,0 +1,169 @@
+body {
+    background: linear-gradient(135deg, #000000, #000304);
+    color: white;
+    font-family: Arial, sans-serif;
+    display: flex;
+    gap: 15px;
+    height: 100vh;
+    padding: 15px;
+}
+
+.container {
+    background-color: transparent;
+    height: 100%;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    text-align: center;
+}
+
+.title {
+    top: 0%;
+    position: absolute;
+    font-size: 36px;
+    margin-bottom: 2px;
+    color: #f4f6f6;
+    text-shadow: 0 0 10px #4006fd, 0 0 20px #0341f8, 0 0 30px #1105fa;
+}
+
+.logo-container {
+    text-align: center;
+    margin-bottom: 60px;
+    margin-top: 80px;
+}
+
+.logo {
+    max-width: 100%;
+    height: auto;
+    max-height: 250px;
+    margin-top: -160px;
+}
+
+.bed{
+    flex-direction: column;
+}
+
+.kitchen{
+    flex-direction: column;
+}
+
+.result_text {
+    position: absolute;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+    padding: 10px;
+    background-color: #0a232a;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #05b5f0;
+    width: 13cm;
+    height: 4cm;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.input_outer {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: black;
+    border-radius: 10px;
+    padding: 15px;
+    display: flex;
+    width: 70%;
+    gap: 10px;
+    align-items: left;
+    border: 1px solid #4a00de;
+    box-shadow: 0 0 10px #1e00de;
+}
+
+.input_outer input {
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    color: white;
+    font-size: 16px;
+    padding: 8px;
+    outline: none;
+    box-shadow: 0 0 10px #039df0;
+}
+
+.cmn_btn {
+    border: 1px solid white;
+    background: #0a232a;
+    border-radius: 20px;
+    color: white;
+    padding: 8px 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.cmn_btn:hover {
+    background-color: #2100de;
+    color: #020d10;
+}
+
+.date-weather {
+    flex-direction: column;
+    text-align: center;
+    font-size: 1.3em;
+    padding: 15px;
+}
+
+.weather-info {
+    flex-direction: column;
+    text-align: center;
+    font-size: 1.3em;
+    padding: 15px;
+}
+
+.controls-container {
+    padding: 10px;
+    background: rgba(0, 180, 216, 0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.light-control, .fan-control {
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 0 8px rgba(0, 255, 255, 0.4);
+}
+
+.chat-interface {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 180, 216, 0.15);
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+}
+
+.chat-interface h2 {
+    margin-bottom: 10px;
+}
+
+button, input[type=range] {
+    margin-top: 10px;
+    padding: 12px;
+    border: none;
+    cursor: pointer;
+    background: #0077B6;
+    color: white;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #00B4D8;
+}
