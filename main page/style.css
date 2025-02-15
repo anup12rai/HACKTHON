@@ -121,7 +121,7 @@ body {
     top: 20px;
     right: 9px;
     flex-direction: column;
-    text-align: center;
+    text-align: right;
     font-size: 1.3em;
     padding: 15px;
 }
@@ -132,13 +132,15 @@ body {
     top: 50px;
     right: 9px;
     flex-direction: column;
-    text-align: center;
+    text-align: right;
     font-size: 1.3em;
     padding: 15px;
 }
 
 .dev {
     margin: 15px;
+    font-size: 30px;
+    text-align: center;
 }
 
 .his{
@@ -158,6 +160,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 1px;
+ 
 }
 
 .light-control, .fan-control {
@@ -194,7 +197,7 @@ body {
 
 .chat-title {
     color:#7f7f7f;
-    border-bottom: 2px solid rgba(0, 0, 0, 0.4); /* Add a bottom border */
+    border-bottom: 2px solid rgba(64, 59, 59, 0.4); /* Add a bottom border */
     font-size: 1.2em;
     text-align: left;
     white-space: nowrap; /* Prevent text from wrapping */
@@ -230,3 +233,5 @@ button, input[type=range] {
 button:hover {
     background: #00B4D8;
 }
+ /* over lap of mic */
+
