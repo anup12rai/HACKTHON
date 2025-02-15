@@ -9,7 +9,6 @@ body {
     margin: 0;
 }
 
-
 .title {
     text-emphasis: bold;
     margin: 0;
@@ -23,7 +22,6 @@ body {
 .chat-container {
     position: absolute;
     bottom: 50px;
-    
     width: 100%;
     max-width: 600px;
     padding: 16px;
@@ -93,11 +91,11 @@ body {
     background-color: #3182ce;
 }
 
-.bed{
+.bed {
     flex-direction: column;
 }
 
-.kitchen{
+.kitchen {
     flex-direction: column;
 }
 
@@ -130,7 +128,6 @@ body {
 
 .weather-info {
     color: #606989;
-    
     position: absolute;
     top: 50px;
     right: 9px;
@@ -140,33 +137,74 @@ body {
     padding: 15px;
 }
 
-.dev{
+.dev {
     margin: 15px;
 }
 
-        .controls-container {
-            
-            border-radius: 8px;
-            font-size: 24px;
-            position: absolute;
-            bottom: 100px;
-            left: 15px;
-            padding: 18px ;
-            background: #1b2333;
-            display: flex;
-            flex-direction: column;
-           gap: 1px;
-        }
-        .light-control, .fan-control {
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 8px rgba(0, 255, 255, 0.4);
-            text-align: left;
-        }
-      
+.his{
+    margin: 15px;
+    font-size: 30px;
+    text-align: center;
+}
+
+.controls-container {
+    border-radius: 8px;
+    font-size: 24px;
+    position: absolute;
+    bottom: 100px;
+    left: 15px;
+    padding: 18px;
+    background: #1b2333;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.light-control, .fan-control {
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 8px rgba(0, 255, 255, 0.4);
+    text-align: left;
+}
+
+.chat-history {
+    position: fixed;
+    right: 15px;
+    bottom: 80px;
+    text-align: left;
+    align-items: left;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    height: 450px;
+    width: 300px; /* Set a fixed width */
+    background: #1b2333;
+    border-radius: 10px;
+    overflow: hidden; /* Ensure overflow is hidden */
+}
+
+.chat-date {
+    text-emphasis: bold;
+    color: #949494;
+    font-size: 1.34em;
+    text-align: left;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.4); /* Add a bottom border */
+}
+
+.chat-title {
+    color:#7f7f7f;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.4); /* Add a bottom border */
+    font-size: 1.2em;
+    text-align: left;
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide overflow text */
+    text-overflow: ellipsis; /* Display ellipsis for overflow text */
+}
+
 .logo-container {
     position: absolute;
-    top: 30px;     
+    top: 30px;
     text-align: center;
     margin-bottom: 60px;
     margin-top: 80px;
@@ -176,20 +214,19 @@ body {
     max-width: 100%;
     height: auto;
     max-height: 280px;
-
 }
 
-        button, input[type=range] {
-            margin-top: 10px;
-            padding: 12px;
-            border: none;
-            cursor: pointer;
-            background: #0077B6;
-            color: white;
-            border-radius: 8px;
-            transition: 0.3s;
-        }
-        button:hover {
-            background: #00B4D8;
-        }
-    
+button, input[type=range] {
+    margin-top: 10px;
+    padding: 12px;
+    border: none;
+    cursor: pointer;
+    background: #0077B6;
+    color: white;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #00B4D8;
+}
