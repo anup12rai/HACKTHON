@@ -1,92 +1,104 @@
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #060506;
+    background: rgb(3, 9, 41);
     color: white;
-    height: 100vh;
+    font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
+    height: 100vh;
+    margin: 0;
 }
 
-/* Main container styling */
-.container {
-    background-color: #030404;
-    height: 100%;
-    width: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    position: relative;
-    text-align: center;
-}
 
 .title {
-    top: 0%;
+    text-emphasis: bold;
+    margin: 0;
+    top: 40px;
     position: absolute;
-    font-size: 36px;
-    margin-bottom: 2px;
+    font-size: 70px;
     color: #f4f6f6;
     text-shadow: 0 0 10px #4006fd, 0 0 20px #0341f8, 0 0 30px #1105fa;
 }
 
-.logo-container {
-    text-align: center;
-    margin-bottom: 30px;
-    margin-top: 50px;
-}
-
-.logo {
-    max-width: 100%;
-    height: auto;
-    max-height: 130px;
-    margin-top: -160px;
-}
-
-
-
-.input_outer {
-    background-color: black;
-    border-radius: 10px;
-    padding: 15px;
-    display: flex;
+.chat-container {
     position: absolute;
-    bottom: 20px;
-    width: 50%;;
-    gap: 10px;
-    align-items: left;
-    border: 1px solid #4a00de;
-    box-shadow: 0 0 10px #1e00de;
-}
-
-.input_outer input {
+    bottom: 50px;
+    
     width: 100%;
-    border: none;
-    background-color: transparent;
-    color: white;
-    font-size: 16px;
-    padding: 8px;
-    outline: none;
-    box-shadow: 0 0 10px #039df0;
+    max-width: 600px;
+    padding: 16px;
+    background-color: #1b2333;
+    border-radius: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
 }
 
-.input_outer input:focus-visible {
-    outline: none;
-}
-
-.result_text {
-    position: center;
-    font-size: 20px;
-    padding: 10px;
-    background-color: #0a232a;
-    border-radius: 10px;
-    box-shadow: 0 0 10px #05b5f0;
-    width: 13cm;
-    height: 4cm;
+.messages-container {
+    height: 200px;
     overflow-y: auto;
-    overflow-x: hidden;
+    padding: 12px;
+    background-color: #111828;
+    border-radius: 8px;
+}
+
+.message {
+    margin-bottom: 8px;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.message.user {
+    background-color: #4299e1;
+}
+
+.message.bot {
+    background-color: #4a5568;
+}
+
+.typing {
+    color: #a0aec0;
+    display: none;
+}
+
+.input-container {
+    margin-top: 12px;
+    display: flex;
+    align-items: center; /* Ensure items are aligned vertically */
+}
+
+.message-input {
+    flex: 1;
+    padding: 8px;
+    background-color: #212838;
+    border: none;
+    border-radius: 8px 0 0 8px;
+    color: white;
+    box-sizing: border-box; /* Ensure padding is included in the element's total width and height */
+    height: 40px; /* Set a fixed height */
+}
+
+.send-button {
+    background-color: #4299e1;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 0 8px 8px 0;
+    cursor: pointer;
+    box-sizing: border-box; /* Ensure padding is included in the element's total width and height */
+    height: 40px; /* Set a fixed height to match the input field */
+    margin: 0px;
+}
+
+.send-button:hover {
+    background-color: #3182ce;
+}
+
+.bed{
+    flex-direction: column;
+}
+
+.kitchen{
+    flex-direction: column;
 }
 
 .cmn_btn {
@@ -105,43 +117,88 @@ body {
     color: #020d10;
 }
 
-.container-2{
-    background-color: #030404;
-    height: 100%;
-    width: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    position: fixed;
-    text-align: right;
-}
-.time {
+.date-weather {
+    color: #606989;
     position: absolute;
-    top: 10px;
-    right: 20px;
-    font-size: 24px;
-    color: rgb(244, 246, 246);
-    text-shadow: 0 0 10px rgb(64, 6, 253), 0 0 20px rgb(3, 65, 248), 0 0 30px rgb(17, 5, 250);
-}
-
-.weather {
-    position: absolute;
-    top: 50px; /* Adjust the position below the time */
-    right: 20px;
-    font-size: 18px;
-    color: rgb(244, 246, 246);
-    text-shadow: 0 0 10px rgb(64, 6, 253), 0 0 20px rgb(3, 65, 248), 0 0 30px rgb(17, 5, 250);
-}
-
-.container-3{
-    background-color: #030404;
-    height: 100%;
-    width: 50%;
-    display: flex;
-    justify-content: left;
-    align-items: center;
+    top: 20px;
+    right: 9px;
     flex-direction: column;
-
     text-align: center;
+    font-size: 1.3em;
+    padding: 15px;
 }
+
+.weather-info {
+    color: #606989;
+    
+    position: absolute;
+    top: 50px;
+    right: 9px;
+    flex-direction: column;
+    text-align: center;
+    font-size: 1.3em;
+    padding: 15px;
+}
+
+.dev{
+    margin: 15px;
+}
+
+        .controls-container {
+            
+            border-radius: 8px;
+            font-size: 24px;
+            position: absolute;
+            bottom: 100px;
+            left: 15px;
+            padding: 18px ;
+            background: #1b2333;
+            display: flex;
+            flex-direction: column;
+           gap: 1px;
+        }
+        .light-control, .fan-control {
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 8px rgba(0, 255, 255, 0.4);
+        }
+
+        .light-control h4, .fan-control h4 {
+           text-align: left;
+        }
+
+        .light-control p, .fan-control p {
+           text-align: right;
+        }
+
+
+        
+.logo-container {
+    position: absolute;
+    top: 30px;     
+    text-align: center;
+    margin-bottom: 60px;
+    margin-top: 80px;
+}
+
+.logo {
+    max-width: 100%;
+    height: auto;
+    max-height: 280px;
+
+}
+
+        button, input[type=range] {
+            margin-top: 10px;
+            padding: 12px;
+            border: none;
+            cursor: pointer;
+            background: #0077B6;
+            color: white;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #00B4D8;
+        }
+    
