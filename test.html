@@ -202,7 +202,7 @@
     <section class="container">
         
         <div class="title"><h1>nexo</h1></div>
-        <div class="logo-container" onclick="startSpeaking()">
+        <div class="logo-container">
             <img src="AI-soul2.gif" alt="Logo" class="logo">
         </div>
         
@@ -228,15 +228,6 @@
         setInterval(updateTime, 1000);
         updateTime();
         
-        function toggleLight(type) {
-            alert(type + " Light toggled");
-        }
-        function toggleFan() {
-            alert("Fan toggled");
-        }
-        function adjustFanSpeed(value) {
-            alert("Fan speed set to " + value);
-        }
     
         function sendMessage() {
             const msg = document.getElementById('message').value;
@@ -244,13 +235,8 @@
                 document.getElementById('speechBox').innerText = msg;
             }
         }
-        function startSpeaking() {
-            const msg = document.getElementById('speechBox').innerText;
-            if (msg !== "Your speech will appear here...") {
-                const speech = new SpeechSynthesisUtterance(msg);
-                window.speechSynthesis.speak(speech);
-            }
-        }
+        
+        
         
         //toggle
  
@@ -275,7 +261,6 @@
     weatherInfo.innerText = `Temperature: ${currentConditions.temp}°F, Condition: ${currentConditions.conditions}`;
 }
 
-//weather 
 fetch("https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/kathmandu?unitGroup=us&key=W33RTSCK5XCBJK2XKTBAMETW5&contentType=json", {
   method: 'GET'
 }).then(response => {
