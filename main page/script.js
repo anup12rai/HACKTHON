@@ -9,14 +9,34 @@ updateTime();
 function toggle(id) {
     const toggleOn = document.getElementById(`toggle-on-${id}`);
     const toggleOff = document.getElementById(`toggle-off-${id}`);
+    let valueToSend;
 
     if (toggleOn.style.display === 'inline') {
         toggleOn.style.display = 'none';
         toggleOff.style.display = 'inline';
+        if (id === 'bed') {
+            valueToSend = '0'; // Send 0 when bed light is toggled off
+        } else if (id === 'kitchen') {
+            valueToSend = '00'; // Send 00 when kitchen light is toggled off
+        } else if (id === 'fan') {
+            valueToSend = '000'; // Send 000 when fan is toggled off
+        }
     } else {
         toggleOn.style.display = 'inline';
         toggleOff.style.display = 'none';
+        if (id === 'bed') {
+            valueToSend = '1'; // Send 1 when bed light is toggled on
+        } else if (id === 'kitchen') {
+            valueToSend = '11'; // Send 11 when kitchen light is toggled on
+        } else if (id === 'fan') {
+            valueToSend = '111'; // Send 111 when fan is toggled on
+        }
     }
+
+    // Set the value to the message input and send it
+    const messageInput = document.getElementById('messageInput');
+    messageInput.value = valueToSend;
+    document.getElementById('sendButton').click();
 }
 
 // Weather function
@@ -121,7 +141,8 @@ recognition.onresult = (event) => {
         recognition.onerror = (event) => {
             console.error("Speech recognition error:", event.error);
             if (event.error === 'not-allowed') {
-                result.textContent = "Microphone access denied. Please enable permissions.";
+                result.textContent = "";//error msg hya raha but tost banayera
+                
             }
             isRecognitionActive = false;
             voiceButton.classList.remove('active');
