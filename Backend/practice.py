@@ -1,15 +1,16 @@
-import asyncio
-import websockets
-import json
+from flask import Flask, render_template, request, jsonify
 import serial
-import subprocess
-import datetime
 from groq import Groq
+from json import load, dump
+import datetime
 from dotenv import dotenv_values
 from TextToSpeech import TextToSpeech
+from timeee import function
+import subprocess
 from systeminstruction import System
-from play_songs import play_youtube
-from json import load, dump
+from play_songs import play_youtube, skip_ads
+
+app = Flask(__name__)
 
 # Load environment variables
 env_vars = dotenv_values(".env")
@@ -20,14 +21,10 @@ list_of_songs = ["waven flag"]
 
 # Initialize Groq client
 client = Groq(api_key=GroqAPIKey)
-
-# Serial connection for Arduino
 arduino = serial.Serial('COM5', 9600, timeout=1)
 
-# Initialize user sessions
-user_sessions = {}
-
 # Messages list and System ChatBot setup
+messages = []
 System = System
 SystemChatBot = [{"role": "system", "content": System}]
 
@@ -45,129 +42,116 @@ def RealtimeInformation():
     data += f"Time: {hour} hour: {minute} minutes: {second} seconds.\n"
     return data
 
-def ControlLight(command):
-    """Send a command to Arduino to control lights"""
-    arduino.write(command.encode())  # Send command to Arduino
-    response = arduino.readline().decode('utf-8').strip()  # Read response from Arduino
-    return response
+def load_chat_log():
+    try:
+        with open(r"Data/ChatLog.json", "r") as f:
+            return load(f)
+    except FileNotFoundError:
+        with open(r"Data/ChatLog.json", "w") as f:
+            dump([], f)
+        return []
+
+def AnswerModifier(Answer):
+    lines = Answer.split('\n')
+    non_empty_lines = [line for line in lines if line.strip()]
+    return '\n'.join(non_empty_lines)
+
+def save_chat_log(messages):
+    with open(r"Data/ChatLog.json", "w") as f:
+        dump(messages, f, indent=4)
+
+def OpenNotepad(File):
+    subprocess.Popen(["notepad.exe", File])
 
 def Content(Topic):
     """Generates professional content and opens it in Notepad"""
     try:
+        messages.append({"role": "user", "content": f"{Topic} in a professional format."})
+        TextToSpeech("Sir, wait a sec, generating the content.")
         completion = client.chat.completions.create(
             model="mixtral-8x7b-32768",
-            messages=SystemChatBot + [{"role": "user", "content": f"{Topic} in a professional format."}],
+            messages=SystemChatBot + messages,
             max_tokens=2048,
             temperature=0.7,
             top_p=1,
             stream=True,
             stop=None
         )
+
         Answer = ""
         for chunk in completion:
             if chunk.choices[0].delta.content:
                 Answer += chunk.choices[0].delta.content
-        Answer = Answer.replace("</s>", "").strip()
 
+        Answer = Answer.replace("</s>", "").strip()
+        messages.append({"role": "assistant", "content": Answer})
+
+        # Save content to a file
         filename = "Generated_Content.txt"
         with open(filename, "w", encoding="utf-8") as file:
             file.write(Answer)
-        
         TextToSpeech("Have a look sir. The content is ready.")
-        subprocess.Popen(["notepad.exe", filename])
+        # Open file in Notepad
+        OpenNotepad(filename)
 
         return Answer
+
     except Exception as e:
         return f"An error occurred: {e}"
 
-async def handle_connection(websocket, path):
-    user_id = str(id(websocket))  # Unique identifier for each user session
-    print(f"New connection: {user_id}")
+def ControlLight(command):
+    """Send a command to Arduino to control lights"""
+    arduino.write(command.encode())  # Send command to Arduino
+    response = arduino.readline().decode('utf-8').strip()  # Read response from Arduino
+    return response
 
-    # Initialize a unique chat session for the user
-    user_sessions[user_id] = {
-        'messages': SystemChatBot,
-    }
-
+def ChatBot(Query):
+    """This function sends the user query and handles light commands"""
     try:
-        async for message in websocket:
-            data = json.loads(message)
-            user_input = data.get("input", "")
-            print(f"Received input from {user_id}: {user_input}")
+        # Load chat log
+        with open(r"Data\ChatLog.json", "r") as f:
+            messages = load(f)
 
-            # Handle light control commands
-            if 'turn on light1' in user_input.lower():
-                response = ControlLight("light1_on")
-            elif 'turn off light1' in user_input.lower():
-                response = ControlLight("light1_off")
-            elif 'turn on light2' in user_input.lower():
-                response = ControlLight("light2_on")
-            elif 'turn off light2' in user_input.lower():
-                response = ControlLight("light2_off")
-            # Handle YouTube related commands
-            elif any(keyword in user_input.lower() for keyword in ["play music", "play song", "i am tired"]):
-                TextToSpeech("Sir, which song should I play, or can I play from the listed songs?")
-                play_youtube(list_of_songs[0])  # Play a default song or user input
-                response = "Playing song..."
+        messages.append({"role": "user", "content": f"{Query}"})
 
-            # Handle content generation
-            elif "application" in user_input.lower() or "create" in user_input.lower():
-                content = Content(user_input)  # Generate content and open in Notepad
-                response = content
+        # Check for light control commands
+        if 'turn on light1' in Query.lower():
+            response = ControlLight("light1_on")
+        elif 'turn off light1' in Query.lower():
+            response = ControlLight("light1_off")
+        elif 'turn on light2' in Query.lower():
+            response = ControlLight("light2_on")
+        elif 'turn off light2' in Query.lower():
+            response = ControlLight("light2_off")
+        elif 'play' in Query.lower() or 'music' in Query.lower():
+            response = play_youtube("waven flag")
+        elif "open notepad" in Query.lower():
+            OpenNotepad("Generated_Content.txt")
+        else:
+            response = AnswerModifier("Assistant is working.")
 
-            else:
-                # Send request to Groq API for other queries
-                completion = client.chat.completions.create(
-                    model="llama3-70b-8192",
-                    messages=user_sessions[user_id]['messages'] + [{"role": "system", "content": RealtimeInformation()}],
-                    max_tokens=1024,
-                    temperature=0.7,
-                    top_p=1,
-                    stream=True,
-                    stop=None
-                )
+        return response
 
-                Answer = ""
-                for chunk in completion:
-                    if chunk.choices[0].delta.content:
-                        Answer += chunk.choices[0].delta.content
+    except Exception as e:
+        return f"An error occurred: {e}"
 
-                Answer = Answer.replace("</s>", "")
-                user_sessions[user_id]['messages'].append({"role": "assistant", "content": Answer})
+def save_messages():
+    with open(r"Data\ChatLog.json", "w") as file:
+        dump(messages, file, indent=4)
 
-                response = Answer
+@app.route('/')
+def index():
+    return render_template('index.html')
 
-            # Send response back to the user
-            await websocket.send(json.dumps({"response": response}))
+@app.route('/chat', methods=['POST'])
+def chat():
+    user_input = request.form['user_input']
+    response = ChatBot(user_input)
+    return jsonify({'response': response})
 
-    except websockets.exceptions.ConnectionClosed:
-        print(f"Connection closed: {user_id}")
+@app.route('/update_time', methods=['GET'])
+def update_time():
+    return jsonify({'time': RealtimeInformation()})
 
-    finally:
-        # Clean up the session
-        if user_id in user_sessions:
-            del user_sessions[user_id]
-async def handle_connection(connection, path):
-    print(f"New connection: {path}")
-    try:
-        async for message in connection:
-            print(f"Received message: {message}")
-            await connection.send(f"Hello! You said: {message}")
-    except websockets.exceptions.ConnectionClosed as e:
-        print(f"Connection closed: {e}")
-
-# --- WebSocket Server ---
-async def main():
-    server = await websockets.serve(handle_connection, "localhost", 8765)
-    print("WebSocket server started on ws://localhost:8765")
-    await server.wait_closed()
-
-# Start WebSocket server
-try:
-    asyncio.run(main())
-except KeyboardInterrupt:
-    print("Server shutting down...")
-finally:
-    if arduino and arduino.is_open:
-        arduino.close()
-        print("Serial connection closed.")
+if __name__ == "__main__":
+    app.run(debug=True)
