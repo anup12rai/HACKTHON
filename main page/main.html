@@ -6,7 +6,7 @@
     <title>AI Assistant - Jarvas</title>
     <style>
 body {
-    background: linear-gradient(135deg, #0a1542, #404f86);
+    background: rgb(3, 9, 41);
     color: white;
     font-family: Arial, sans-serif;
     display: flex;
@@ -18,11 +18,11 @@ body {
 
 
 .title {
-    top: 9px;
-    
+    text-emphasis: bold;
+    margin: 0;
+    top: 40px;
     position: absolute;
-    font-size: 36px;
-    margin-bottom: 2px;
+    font-size: 70px;
     color: #f4f6f6;
     text-shadow: 0 0 10px #4006fd, 0 0 20px #0341f8, 0 0 30px #1105fa;
 }
@@ -34,7 +34,7 @@ body {
     width: 100%;
     max-width: 600px;
     padding: 16px;
-    background-color: #1a2332;
+    background-color: #1b2333;
     border-radius: 16px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     display: flex;
@@ -45,7 +45,7 @@ body {
     height: 200px;
     overflow-y: auto;
     padding: 12px;
-    background-color: #2d3748;
+    background-color: #111828;
     border-radius: 8px;
 }
 
@@ -71,15 +71,18 @@ body {
 .input-container {
     margin-top: 12px;
     display: flex;
+    align-items: center; /* Ensure items are aligned vertically */
 }
 
 .message-input {
     flex: 1;
     padding: 8px;
-    background-color: #2d3748;
+    background-color: #212838;
     border: none;
     border-radius: 8px 0 0 8px;
     color: white;
+    box-sizing: border-box; /* Ensure padding is included in the element's total width and height */
+    height: 40px; /* Set a fixed height */
 }
 
 .send-button {
@@ -88,6 +91,9 @@ body {
     border: none;
     border-radius: 0 8px 8px 0;
     cursor: pointer;
+    box-sizing: border-box; /* Ensure padding is included in the element's total width and height */
+    height: 40px; /* Set a fixed height to match the input field */
+    margin: 0px;
 }
 
 .send-button:hover {
@@ -142,11 +148,12 @@ body {
 }
        
         .controls-container {
+            
             border-radius: 8px;
-            font-size: 21px;
+            font-size: 24px;
             position: absolute;
-            bottom: 130px;
-            left: 9px;
+            bottom: 100px;
+            left: 15px;
             padding: 10px ;
             background: #1b2333;
             display: flex;
@@ -155,16 +162,23 @@ body {
         }
         .light-control, .fan-control {
             padding: 20px;
-            
-            text-align: center;
             border-radius: 10px;
             box-shadow: 0 0 8px rgba(0, 255, 255, 0.4);
         }
+
+        .light-control h4, .fan-control h4 {
+           text-align: left;
+        }
+
+        .light-control p, .fan-control p {
+           text-align: right;
+        }
+
+
         
-        .logo-container {
-            position: absolute;
-            top: 45px;
-            
+.logo-container {
+    position: absolute;
+    top: 30px;     
     text-align: center;
     margin-bottom: 60px;
     margin-top: 80px;
@@ -195,9 +209,9 @@ body {
 <body>
     
     <div class="controls-container">
-        <H4> Devices Connected</H4>
+        <h3>Devices Connected</h3>
         <div class="light-control">
-            <h3>Light Control</h3>
+            Light Control
             <p>bed light 
                 <img id="toggle-on-bed" onclick="toggle('bed')" src="on.png" style="display: inline;">
                 <img id="toggle-off-bed" onclick="toggle('bed')" src="off.png" style="display: none;">
@@ -208,7 +222,7 @@ body {
             </p>
         </div>
         <div class="fan-control">
-            <h3>Fan Control</h3>
+            Fan Control
             <p>ceiling fan
                 <img id="toggle-on-fan" onclick="toggle('fan')" src="on.png" style="display: inline;">
                 <img id="toggle-off-fan" onclick="toggle('fan')" src="off.png" style="display: none;">
@@ -216,7 +230,7 @@ body {
         </div>
     </div>
     
-    <div class="title"><h1>nexo</h1></div>
+    <div class="title">Jarivs</div>
     <div class="logo-container">
         <img src="AI-soul2.gif" alt="Logo" class="logo">
     </div>
