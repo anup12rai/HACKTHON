@@ -96,3 +96,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+// websocket
+
+const socket = new WebSocket("ws://localhost:8765");
+
+socket.onmessage = function(event) {
+    document.getElementById("response").innerText = event.data;
+};
+
+function sendMessage() {
+    let message = document.getElementById("message-input").value;
+    socket.send(message);
+}
