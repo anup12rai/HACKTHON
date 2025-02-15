@@ -161,18 +161,9 @@ body {
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 8px rgba(0, 255, 255, 0.4);
+            text-align: left;
         }
-
-        .light-control h4, .fan-control h4 {
-           text-align: left;
-        }
-
-        .light-control p, .fan-control p {
-           text-align: right;
-        }
-
-
-        
+      
 .logo-container {
     position: absolute;
     top: 30px;     
