@@ -209,17 +209,20 @@ body {
 }
 
 .logo-container {
-    position: absolute;
+    position: absolute; /* Makes it the reference point for absolute positioning */
     top: 30px;
     text-align: center;
-    margin-bottom: 60px;
+    margin-bottom: 60px; /* Adjust margin  but it's not affecting.*/
     margin-top: 80px;
+   
+    
+    
 }
 
 .logo {
     max-width: 100%;
     height: auto;
-    max-height: 280px;
+    max-height:280px;
 }
 
 button, input[type=range] {
@@ -237,4 +240,14 @@ button:hover {
     background: #00B4D8;
 }
  /* over lap of mic */
+ 
 
+
+.overlay-img {
+    position: absolute;
+    bottom: 125px;   /* Adjust position */
+    right: 180px;    /* Adjust position */
+    width: 30px;   /* Adjust size of mic icon */
+    height: auto;
+    z-index: 99;
+}
