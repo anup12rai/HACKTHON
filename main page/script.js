@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             isTyping = false;
             typingIndicator.style.display = 'none';
-            addMessage('This is a bot response.', 'bot');
+            addMessage('Backend is not connected  sorry.', 'bot');
         }, 1000);
     }
 

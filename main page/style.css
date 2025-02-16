@@ -241,13 +241,3 @@ button:hover {
 }
  /* over lap of mic */
  
-
-
-.overlay-img {
-    position: absolute;
-    bottom: 125px;   /* Adjust position */
-    right: 180px;    /* Adjust position */
-    width: 30px;   /* Adjust size of mic icon */
-    height: auto;
-    z-index: 99;
-}
